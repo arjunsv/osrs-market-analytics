@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="UTF-8">	
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">	
 <h1> OSRS Real Time Exchange Feed </h1>
-<script src="bundle.js"></script>
 
 </head>
 <body>
@@ -13,6 +13,26 @@
 <br>
 <div id="chartContainer" style="height: 400px; max-width: 920px; margin: 0px auto;"></div>
 <br>
+
+<div id="itemTable" style="height: 400px; max-width: 920px; margin: 0px auto;">
+	<h1> OSRS Item IDs </h1>
+	<table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>ITEM ID</th>
+                <th>NAME</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.4/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
+<script src="table_attributes.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="bundle.js"></script>
+
 </body>
 </html>

@@ -2,6 +2,10 @@
 window.onload = function () {
 
 //chart
+var listOfDatapoints = [];
+
+
+
 var dataPoints1 = [];
 var dataPoints2 = [];
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -167,23 +171,16 @@ function toggleDataSeries(e) {
 	else {
 		e.dataSeries.visible = true;
 	}
-	chart.render();
-	chart2.render();
-	chart3.render();
 }
 
 // how fast values update on graph
 var updateInterval = 1500;
-// initial value
-var yValue1 = 600; 
-var yValue2 = 605;
-
 var time = new Date;
 // starting at 9.30 am
-time.setHours(12);
-time.setMinutes(30);
-time.setSeconds(00);
-time.setMilliseconds(00);
+// time.setHours(12);
+// time.setMinutes(30);
+// time.setSeconds(00);
+// time.setMilliseconds(00);
 
 function updateChart(count) {
 	count = count || 1;
@@ -200,9 +197,9 @@ function updateChart(count) {
     updatePopulation();
 
 
-    console.log(dataPoints1.length);
+    //console.log(dataPoints1.length);
     if (dataPoints1.length > 1){
-    	console.log("it gets here!!!")
+    	//console.log("it gets here!!!")
       	dataPoints1.shift();
       	dataPoints2.shift();
       	dataPoints3.shift();
@@ -270,6 +267,13 @@ function get4(item) {
 }
 
 
+
+
+
+
+
+
+
 function updatePopulation() {
 	var request = require('request'),
 	cheerio = require('cheerio');
@@ -286,7 +290,7 @@ function updatePopulation() {
 		x: time.getTime(),
 		y: playerCountInt
 		});
-		console.log(playerCountInt);
+		// console.log(playerCountInt);
 	}
 	});
 }
