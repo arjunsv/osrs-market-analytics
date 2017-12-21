@@ -24,7 +24,7 @@ class Chart {
 				xValueType: "dateTime",
 				yValueFormatString: "####.00",
 				xValueFormatString: "hh:mm:ss TT",
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				showInLegend: true,
 				name: itemName,
 				dataPoints: []	
@@ -39,12 +39,12 @@ class Chart {
 			zoomEnabled: true,
 			title: {
 				text: this.titleText,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				fontWeight: "Bolder"
 			},
 			axisX: {
 				title: this.xTitle,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 			},
 			axisY:{
 				prefix: "",
@@ -58,7 +58,7 @@ class Chart {
 				cursor:"pointer",
 				verticalAlign: "top",
 				fontSize: 18,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				fontColor: "dimGrey",
 				itemclick : toggleDataSeries,
 				verticalAlign: "top",
@@ -12221,6 +12221,7 @@ $(document).ready(function() {
   // End of Datatable
   // Tail of ready function
 } );
+
 // BELOW is stuff for the population chart, which follows a different framework than ItemChart
 var populationData = []
 var populationChart = new CanvasJS.Chart("chartContainer3", {
@@ -12266,6 +12267,7 @@ var populationChart = new CanvasJS.Chart("chartContainer3", {
 		dataPoints: populationData
 		}]
 });
+
 function updatePopulation() {
 	var request = require('request'),
 	cheerio = require('cheerio');

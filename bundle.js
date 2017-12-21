@@ -25,7 +25,7 @@ class Chart {
 				xValueType: "dateTime",
 				yValueFormatString: "####.00",
 				xValueFormatString: "hh:mm:ss TT",
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				showInLegend: true,
 				name: itemName,
 				dataPoints: []	
@@ -40,12 +40,12 @@ class Chart {
 			zoomEnabled: true,
 			title: {
 				text: this.titleText,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				fontWeight: "Bolder"
 			},
 			axisX: {
 				title: this.xTitle,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 			},
 			axisY:{
 				prefix: "",
@@ -59,7 +59,7 @@ class Chart {
 				cursor:"pointer",
 				verticalAlign: "top",
 				fontSize: 18,
-				fontFamily: "Arial",
+				fontFamily: "Helvetica Neue",
 				fontColor: "dimGrey",
 				itemclick : toggleDataSeries,
 				verticalAlign: "top",
@@ -114,7 +114,6 @@ function toggleDataSeries(e) {
 
 var quantityChart = new Chart("chartContainer2", "Quantity of Item(s) Traded", "Real time quantities pulled from OSBuddy API", 1);
 var priceChart = new Chart("chartContainer", "Price of Item(s)", "Real time prices pulled from OSBuddy API", 0);
-
 // listOfCharts.push(quantityChart);
 // listOfCharts.push(priceChart);
 // how fast values update on graph
@@ -140,7 +139,6 @@ function httpGet(theUrl, callBack, id)
     }
     xmlHttp.send( null );
 }
-
 $(document).ready(function() {
   var table = $('#example').DataTable( {
   "data": [
@@ -12226,7 +12224,6 @@ $(document).ready(function() {
 } );
 
 // BELOW is stuff for the population chart, which follows a different framework than ItemChart
-
 var populationData = []
 var populationChart = new CanvasJS.Chart("chartContainer3", {
 	zoomEnabled: true,
@@ -12275,7 +12272,6 @@ var populationChart = new CanvasJS.Chart("chartContainer3", {
 function updatePopulation() {
 	var request = require('request'),
 	cheerio = require('cheerio');
-
 	request('http://localhost:8000/?other=http://www.oldschool.runescape.com', function(err, resp, body){
 	if (!err && resp.statusCode == 200) {
 		var $ = cheerio.load(body);

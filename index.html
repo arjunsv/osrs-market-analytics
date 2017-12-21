@@ -2,11 +2,65 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">	
-<h1> OSRS Real Time Exchange Feed </h1>
+<style>
+.dt-button {
+	transform: translateY(20px);
+	background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
 
+.dt-button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.dt-button:hover {
+	background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+#tableTitle {
+	transform: translateY(75px);
+
+}
+
+</style>
 </head>
+<!-- Header -->
+
 <body>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">Welcome!</h2>
+      </div>
+      <div class="modal-body">
+        <h4>• Select items from the table below to add them to the charts</h4>
+        <h4>• Click on an item label above the graph to hide its data</h4>
+        <h4>• Work in Progress</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-header" style="color:#FFFFFF;background-color:#009688;padding:9px 4px;margin-top:0;">
+	 <h1 style="text-align:center;margin-top:10px;">OSRS Real Time Exchange Data</h1>
+</div>
+
 <div id="chartContainer3" style="height: 400px; max-width: 920px; margin: 0px auto;"></div>
 <br>
 <div id="chartContainer2" style="height: 400px; max-width: 920px; margin: 0px auto;"></div>
@@ -15,7 +69,7 @@
 <br>
 
 <div id="itemTable" style="height: 400px; max-width: 920px; margin: 0px auto;">
-	<h1> OSRS Item IDs </h1>
+	<h2 class="text-center" id="tableTitle"> OSRS Item IDs </h2>
 	<table id="example" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -28,12 +82,18 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.4/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="bundle.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function () {
+        $('#myModal').modal('show');
+    });
+</script>
 
 </body>
 </html>
