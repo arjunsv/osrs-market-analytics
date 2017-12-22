@@ -22,6 +22,7 @@ class Chart {
 				type: "line",
 				color: color,
 				lineColor: color,
+				markerType: "line",
 				xValueType: "dateTime",
 				yValueFormatString: "####.00",
 				xValueFormatString: "hh:mm:ss TT",

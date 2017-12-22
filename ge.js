@@ -21,6 +21,7 @@ class Chart {
 				type: "line",
 				color: color,
 				lineColor: color,
+				markerType: "line",
 				xValueType: "dateTime",
 				yValueFormatString: "####.00",
 				xValueFormatString: "hh:mm:ss TT",
@@ -12205,7 +12206,7 @@ $(document).ready(function() {
             // console.log(selectedData)
             for (i=0; i < selectedData.length; i++) {
               var json = selectedData[i];
-              var randomColor = "#"+((1<<24)*Math.random()|0).toString(16)
+              var randomColor = getRandomColor();
               quantityChart.addData(randomColor, json.id, json.name);
               priceChart.addData(randomColor, json.id, json.name);
             }
@@ -12289,4 +12290,15 @@ function updatePopulation() {
 	}
 	});
 }
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
 }
