@@ -9,4 +9,4 @@ I plan to use machine learning and other data interpretations in order to predic
 
 Part I: Real Time Data Visualization
 -------------
-[![Alt text](https://img.youtube.com/vi/VID/0.jpg)](https://www.youtube.com/watch?v=z_3nSR7vbIo&feature=youtu.be)
+[![Alt text](https://img.youtube.com/vi/z_3nSR7vbIo/0.jpg)](https://www.youtube.com/watch?v=z_3nSR7vbIo&feature=youtu.be)
