@@ -24,6 +24,7 @@ Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 -------------
 The goal of this part of the project is to use scikit-learn to classify a set of real time parameters of a specific item into groups based on how good of a purchase the item is based on on its predicted price increase in some time interval µ. 
 
-Choosing the correct training models
+Choosing the Correct Training Models
 -------------
-![alt text](https://avatars0.githubusercontent.com/u/365630?s=400&v=4)
+
+
