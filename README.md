@@ -26,5 +26,6 @@ The goal of this part of the project is to use scikit-learn to classify a set of
 
 Choosing the Correct Training Models
 -------------
+![alt text](https://imgur.com/a/Jcv3E)
 
 
