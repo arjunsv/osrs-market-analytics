@@ -22,6 +22,9 @@ Toggling the labels of the items above the graph will hide the data stream of th
 
 Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 -------------
+
+## Regression vs. Classification
+
 The goal of this part of the project is to use scikit-learn to classify a set of real time parameters of a specific item into groups based on how good of a purchase the item is based on on its predicted price increase in some time interval λ. 
 
 ![alt text](https://i.imgur.com/KEwymgn.png)
