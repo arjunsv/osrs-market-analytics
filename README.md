@@ -32,6 +32,8 @@ The goal of this part of the project is to use scikit-learn to classify a set of
 
 ## Training Data Collection
 
+This diagram demonstrates the process of gathering training data and create the observation matrix X, and the corresponding output vector y. 
+
 ![alt text](https://i.imgur.com/N0jtXiT.png)
 
 
