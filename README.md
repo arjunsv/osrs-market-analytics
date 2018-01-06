@@ -30,3 +30,8 @@ The goal of this part of the project is to use scikit-learn to classify a set of
 ![alt text](https://i.imgur.com/KEwymgn.png)
 
 
+## Training Data Collection
+
+![alt text](https://i.imgur.com/N0jtXiT.png)
+
+

@@ -3,6 +3,7 @@ window.onload = function () {
 listOfCharts = []
 itemIdToName = {}
 var time = new Date;
+var currentPopulation = 0
 
 class Chart {
 	constructor(divId, titleText, xTitle, priceOrQuantity) {
@@ -12278,6 +12279,7 @@ function updatePopulation() {
 		var playerCount = $('.player-count');
 		var playerCountTextSplit = (playerCount.text().split(" "));
 		var playerCountInt = parseInt(playerCountTextSplit[3]);
+    // var playerCountInt = JSON.parseInt($('.player-count').text())
 		
 		populationChart.options.data[0].legendText = " USERS ONLINE: " + String(playerCountInt);
 		populationData.push({
@@ -12285,6 +12287,7 @@ function updatePopulation() {
 		y: playerCountInt
 		});
 
+    currentPopulation = playerCountInt;
 		populationChart.render();
 		// console.log(playerCountInt);
 	}
