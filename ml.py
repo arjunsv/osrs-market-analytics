@@ -32,7 +32,9 @@ def get_current_population():
 def get_current_selling_price(item_id):
 	json = get_JSON(item_id)
 	if json:
-		return json['selling']
+		selling = json['selling']
+		print(selling)
+		return selling
 	return -1
 
 def get_current_observation(item_id):
@@ -56,7 +58,7 @@ def training_data_to_csv(item_id, X, y):
 	df.columns = ['current_selling_quantity', 'current_buying_quantity', 'current_selling_price', 'current_population']
 	df['price_half_interval'] = y
 	df.insert(loc=0, column='item_id', value=[item_id]*len(y))
-	df.to_csv("training_data.csv", )
+	df.to_csv(str(item_id) + "_training_data.csv", )
 
 def make_same_length(X, y):
 	while len(y) < len(X):
@@ -88,21 +90,25 @@ def get_training_data(item_id, interval, poll_period):
 	y = []
 	t_middle = time.time() + interval / 2
 	t_end = time.time() + interval
+	print("Gathering observation vectors...")
+	print("[current_selling_quantity, current_buying_quantity, current_selling_price, current_population]")
 	while time.time() < t_middle:
-		time.sleep(poll_period)
 		X.append(get_current_observation(item_id))
-	while time.time() < t_end:
 		time.sleep(poll_period)
+	print("Gathering target values...")
+	print("[selling_price]")
+	while time.time() < t_end:
 		y.append(get_current_selling_price(item_id))
+		time.sleep(poll_period)
+
 	make_same_length(X, y)
 	remove_errors(X, y)
 	training_data_to_csv(item_id, X, y)
 	return X, y
 
-# currently hardcoded to lin_reg, will fix to accomodate all relevant of models
 class Model:
 	def __init__(self, item_id, interval, poll_period, model=LinearRegression):
-		print("Initalizing model for item " + "id=" + str(item_id) + " over interval " +
+		print("Initalizing model for item " + "id=" + str(item_id) + " ~" + id_to_item_name(item_id) + "~" + " over interval " +
 			  str(interval) + " with poll period of " + str(poll_period) + " using " + str(model) + " model" + "...")
 		self.item_id = item_id
 		self.interval = interval
@@ -131,8 +137,9 @@ class Model:
 		print("target_vector_count: " + str(len(self.y)))
 		print("observation_vectors: " + str(self.X))
 		print("target_vectors: " + str(self.y))
+		print("interval_of_prediction: " + str(self.interval/2))
 
-lin_reg_model = Model(6685, 7200, 15)
+lin_reg_model = Model(6685, 28800, 20)
 lin_reg_model.get_mean_abs_error()
 lin_reg_model.print_attrs()
 lin_reg_model.make_prediction([[10000, 6000, 6666, 60000]])
