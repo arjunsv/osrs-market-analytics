@@ -27,7 +27,7 @@ Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 
 The goal of this part of the project is to use scikit-learn to predict a target value from a set of real time parameters for a specific item based on the predicted price increase in some user-defined time interval.
 
-![alt text](https://i.imgur.com/w387fHS.png)
+![alt text](https://i.imgur.com/MKz7XpI.png)
 
 ## Training Data Collection
 
