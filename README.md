@@ -10,7 +10,7 @@ I plan to use machine learning and other data interpretations in order to predic
 Real Time Data Visualization
 -------------
 
-### Video Demo
+### Video Demo (Part I)
 [![Alt text](https://img.youtube.com/vi/z_3nSR7vbIo/0.jpg)](https://www.youtube.com/watch?v=z_3nSR7vbIo&feature=youtu.be)
 
 This page allows users to select any item in OSRS and add it to the page. The charts on the page will display the current population of OSRS, the quantity traded of the selected items, and the prices of the selected items.
