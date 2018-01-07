@@ -15,25 +15,24 @@ Real Time Data Visualization
 
 This page allows users to select any item in OSRS and add it to the page. The charts on the page will display the current population of OSRS, the quantity traded of the selected items, and the prices of the selected items.
 
-The CanvasJS graphs will automatically resize axes to accomadate the largest price or quantity of an item loaded into the charts.
+- The CanvasJS graphs will automatically resize axes to accomadate the largest price or quantity of an item loaded into the charts.
 
-Toggling the labels of the items above the graph will hide the data stream of that particular item and rescale the graph.
+- Toggling the labels of the items above the graph will hide the data stream of that particular item and rescale the graph.
 
 
 Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 -------------
 
-## Regression vs. Classification
+## Machine Learning Model
 
-The goal of this part of the project is to use scikit-learn to classify a set of real time parameters of a specific item into groups based on how good of a purchase the item is based on on its predicted price increase in some time interval λ. 
+The goal of this part of the project is to use scikit-learn to predict a target value from a set of real time parameters for a specific item based on the predicted price increase in some user-defined time interval.
 
-![alt text](https://i.imgur.com/KEwymgn.png)
-
+![alt text](https://i.imgur.com/w387fHS.png)
 
 ## Training Data Collection
 
-This diagram demonstrates the process of gathering training data and create the observation matrix X, and the corresponding output vector y. 
+This diagram demonstrates the process of gathering training data and create the observation matrix X, and the corresponding output vector y. λ is a user-defined interval passed in as a parameter when creating the Model object which specifies the duration of training data collection. The diagram below portrays and describes how λ distinguishes how target values are associated with parameter values.
 
 ![alt text](https://i.imgur.com/N0jtXiT.png)
 
-
+*Based on this method of gathering training data, the resulting model is created based on a predicted price that would occurs λ/2 seconds after an observation was taken.*
