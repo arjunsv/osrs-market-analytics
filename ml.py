@@ -38,14 +38,16 @@ def get_current_selling_price(item_id):
 def get_current_observation(item_id):
 	json = get_JSON(item_id)
 	if json:
-		print(json)
+		# print(json)
 		current_selling_quantity = json['sellingQuantity']
 		current_buying_quantity = json['buyingQuantity']
 		current_selling_price = json['selling']
 		current_buying_price = json['buying']
 		current_overall_price = json['overall']
 		current_population = get_current_population()
-		return [current_selling_quantity, current_buying_quantity, current_selling_price, current_population]
+		observation_vector = [current_selling_quantity, current_buying_quantity, current_selling_price, current_population]
+		print(observation_vector)
+		return observation_vector
 	else:
 		return -1
 
@@ -54,7 +56,7 @@ def training_data_to_csv(item_id, X, y):
 	df.columns = ['current_selling_quantity', 'current_buying_quantity', 'current_selling_price', 'current_population']
 	df['price_half_interval'] = y
 	df.insert(loc=0, column='item_id', value=[item_id]*len(y))
-	df.to_csv("training-data.csv", )
+	df.to_csv("training_data.csv", )
 
 def make_same_length(X, y):
 	while len(y) < len(X):
@@ -106,7 +108,7 @@ class Model:
 		self.interval = interval
 		self.poll_period = poll_period
 		self.X, self.y = get_training_data(item_id, interval, poll_period)
-		self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.4)
+		self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2)
 		model = model()
 		model.fit(self.X_train, self.y_train)
 		self.model = model
@@ -130,7 +132,7 @@ class Model:
 		print("observation_vectors: " + str(self.X))
 		print("target_vectors: " + str(self.y))
 
-lin_reg_model = Model(6685, 40, 5)
+lin_reg_model = Model(6685, 7200, 15)
 lin_reg_model.get_mean_abs_error()
 lin_reg_model.print_attrs()
 lin_reg_model.make_prediction([[10000, 6000, 6666, 60000]])
