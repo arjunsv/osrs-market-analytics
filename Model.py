@@ -180,7 +180,6 @@ class Model:
 		plot = sns.pairplot(self.dataframe_total, x_vars=['current_selling_quantity', 'current_buying_quantity', 'current_selling_price', 'current_population'], y_vars="price_half_interval", size=7, aspect=0.7, kind='reg')
 		plt.show()
 
-
 lin_reg_model = Model(6685, 25, 2)
 lin_reg_model.print_attrs()
 lin_reg_model.make_prediction([[10000, 6000, 6666, 60000]])
