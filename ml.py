@@ -12,6 +12,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from item_dict import * 
+import os.path
+import csv
+
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
 def get_JSON(item_id):
@@ -29,16 +32,20 @@ def get_current_population():
 	population_count = int(re.search('(\d+)',population_text).group(1))
 	return population_count
 
+selling_price_time_list = []
 def get_current_selling_price(item_id):
 	json = get_JSON(item_id)
+	selling_price_time_list.append(time.time())
 	if json:
 		selling = json['selling']
 		print(selling)
 		return selling
 	return -1
 
+observation_time_list = []
 def get_current_observation(item_id):
 	json = get_JSON(item_id)
+	observation_time_list.append(time.time())
 	if json:
 		# print(json)
 		current_selling_quantity = json['sellingQuantity']
@@ -53,12 +60,19 @@ def get_current_observation(item_id):
 	else:
 		return -1
 
-def training_data_to_csv(item_id, X, y):
+def training_data_to_csv(item_id, interval, X, y):
+	file_name = "id" + str(item_id) +"_" + "interval" + str(interval) + "_training_data.csv"
 	df = pd.DataFrame(X)
 	df.columns = ['current_selling_quantity', 'current_buying_quantity', 'current_selling_price', 'current_population']
 	df['price_half_interval'] = y
 	df.insert(loc=0, column='item_id', value=[item_id]*len(y))
-	df.to_csv(str(item_id) + "_training_data.csv", )
+	if os.path.exists(file_name):
+		temp_df = pd.read_csv(file_name, index_col=0)
+		temp_df = temp_df.append(df, ignore_index=True)
+		print(temp_df)
+		temp_df.to_csv(file_name, index=True)
+	else:
+		df.to_csv(file_name, index=True)
 
 def make_same_length(X, y):
 	while len(y) < len(X):
@@ -97,13 +111,12 @@ def get_training_data(item_id, interval, poll_period):
 		time.sleep(poll_period)
 	print("Gathering target values...")
 	print("[selling_price]")
-	while time.time() < t_end:
+	while len(y) < len(X):
 		y.append(get_current_selling_price(item_id))
 		time.sleep(poll_period)
-
 	make_same_length(X, y)
 	remove_errors(X, y)
-	training_data_to_csv(item_id, X, y)
+	training_data_to_csv(item_id, interval, X, y)
 	return X, y
 
 class Model:
@@ -139,7 +152,7 @@ class Model:
 		print("target_vectors: " + str(self.y))
 		print("interval_of_prediction: " + str(self.interval/2))
 
-lin_reg_model = Model(6685, 28800, 20)
+lin_reg_model = Model(6685, 60, 5)
 lin_reg_model.get_mean_abs_error()
 lin_reg_model.print_attrs()
 lin_reg_model.make_prediction([[10000, 6000, 6666, 60000]])
