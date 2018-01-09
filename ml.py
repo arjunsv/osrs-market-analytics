@@ -9,18 +9,23 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn import metrics
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from item_dict import * 
 import os.path
+from termcolor import colored, cprint
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
+
+print_cyan_bold = lambda x: cprint(x, 'cyan', attrs=['bold'])
+print_blue_bold = lambda x: cprint(x, 'blue', attrs=['bold'])
+print_green_bold = lambda x: cprint(x, 'green', attrs=['bold'])
+print_red_bold = lambda x: cprint(x, red, attrs=['bold'])
+print_bold = lambda x: cprint(x, 'grey', attrs=['bold'])
 
 def get_JSON(item_id):
 	try:
 		json = requests.get("https://api.rsbuddy.com/grandExchange?a=guidePrice&i="+str(item_id)).json()
 		return json
 	except:
-		print("Error in JSON request")
+		print_red_bold("Error in JSON request")
 		return {}
 
 def id_to_item_name(item_id):
@@ -39,7 +44,7 @@ def index_binary_search(lst, val, first, last):
 
 class Model:
 	def __init__(self, item_id, interval, poll_period, model=LinearRegression):
-		print("Initalizing model for item " + "id=" + str(item_id) + " ~" + id_to_item_name(item_id) + "~" + " over interval " +
+		print_bold("Initializing model for item " + "id=" + str(item_id) + " ~" + id_to_item_name(item_id) + "~" + " over interval " +
 			  str(interval) + " with poll period of " + str(poll_period) + " using " + str(model) + " model" + "...")
 		self.item_id = item_id
 		self.interval = interval
@@ -54,7 +59,7 @@ class Model:
 		model.fit(self.X_train, self.y_train)
 		self.model = model
 		self.y_pred = self.model.predict(self.X_test)
-		print("finished initialization!")
+		print_cyan_bold("finished initialization!")
 
 	def get_mean_abs_error(self):
 		mean_absolute_error = np.sqrt(metrics.mean_squared_error(self.y_test, self.y_pred))
@@ -106,9 +111,8 @@ class Model:
 			return -1
 
 	def time_align(self, y):
-		print("Aligning y-vector values to correct observation vectors...")
+		print_cyan_bold("Aligning y-vector values to correct observation vectors...")
 		new_y = []
-		print(self.observation_time_list)
 		for obs_time in self.observation_time_list:
 			new_y.append(self.get_best_y(obs_time, y))
 		return new_y
@@ -131,28 +135,36 @@ class Model:
 			y.pop()
 
 	def remove_errors(self, X, y):
-		print("Removing anomalies...")
+		error_count = 0
+		print_cyan_bold("Removing anomalies...")
 		indexes_X = [i for i,x in enumerate(X) if x == -1]
 		for i in sorted(indexes_X, reverse=True):
 			X.pop(i)
 			y.pop(i)
+			self.observation_time_list.pop(i)
+			self.new_y_time_list.pop(i)
+			error_count += 1
 		indexes_y = [i for i,x in enumerate(y) if x == -1]
 		for j in sorted(indexes_y, reverse=True):
 			X.pop(i)
 			y.pop(i)
+			self.observation_time_list.pop(i)
+			self.new_y_time_list.pop(i)
+			error_count += 1
+		print_green_bold(str(error_count) + " errors removed.")
 
 	def get_training_data(self):
 		X = []
 		y = []
 		t_middle = time.time() + self.interval / 2
 		t_end = time.time() + self.interval
-		print("Gathering observation vectors...")
+		print_cyan_bold("Gathering observation vectors...")
 		print("[current_selling_quantity, current_buying_quantity, current_selling_price, current_population]")
 		while time.time() < t_middle:
 			self.observation_time_list.append(time.time())
 			X.append(self.get_current_observation(self.item_id))
 			time.sleep(self.poll_period)
-		print("Gathering target values...")
+		print_cyan_bold("Gathering target values...")
 		print("[selling_price]")
 		while len(y) < len(X):
 			self.y_time_list.append(time.time())
@@ -178,7 +190,7 @@ class Model:
 		else:
 			df.to_csv(file_name, index=True)
 
-lin_reg_model = Model(6685, 30, 3)
+lin_reg_model = Model(6685, 20, 2)
 lin_reg_model.get_mean_abs_error()
 lin_reg_model.print_attrs()
 lin_reg_model.make_prediction([[10000, 6000, 6666, 60000]])
