@@ -7,7 +7,7 @@ A tool for visualizing real time prices and quantities of tradeable items in the
 I plan to use machine learning and other data interpretations in order to predict price increases and drops.
 
 
-I. Real Time Data Visualization
+# I. Real Time Data Visualization
 -------------
 
 ### Video Demo (Part I)
