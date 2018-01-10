@@ -23,7 +23,7 @@ This page allows users to select any item in OSRS and add it to the page. The ch
 II. Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 -------------
 
-## Train and Predict Diagram
+# Train and Predict Diagram
 
 The goal of this part of the project is to use scikit-learn to predict a target value from a set of real time parameters for a specific item based on the predicted price increase in some user-defined time interval.
 
