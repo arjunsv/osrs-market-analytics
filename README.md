@@ -1,4 +1,5 @@
-# OSRS Market Analytics and Price Prediction
+OSRS Market Analytics and Price Prediction
+======
 
 A tool for visualizing real time prices and quantities of tradeable items in the game Old School Runescape. In this popular online video game, there is a central exchange for items that players use to trade eachother. This active and dynamic data set is an interesting analog for real life markets and prices. 
 
@@ -6,9 +7,9 @@ A tool for visualizing real time prices and quantities of tradeable items in the
 I plan to use machine learning and other data interpretations in order to predict price increases and drops.
 
 
-## I. Real Time Data Visualization
+# I. Real Time Data Visualization
 
-### Video Demo (Part I)
+## Video Demo (Part I)
 [![Alt text](https://img.youtube.com/vi/z_3nSR7vbIo/0.jpg)](https://www.youtube.com/watch?v=z_3nSR7vbIo&feature=youtu.be)
 
 This page allows users to select any item in OSRS and add it to the page. The charts on the page will display the current population of OSRS, the quantity traded of the selected items, and the prices of the selected items.
@@ -18,9 +19,9 @@ This page allows users to select any item in OSRS and add it to the page. The ch
 - Toggling the labels of the items above the graph will hide the data stream of that particular item and rescale the graph.
 
 
-## II. Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
+# II. Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 
-### Train and Predict
+## Train and Predict
 
 The goal of this part of the project is to use scikit-learn to predict a target value from a set of real time parameters for a specific item based on the predicted price increase in some user-defined time interval.
 
@@ -34,7 +35,7 @@ This diagram demonstrates the process of gathering training data and create the 
 
 *Based on this method of gathering training data, the resulting model is created based on a predicted price that would occurs **λ/2** seconds after an observation was taken.*
 
-### Data Sanitization
+## Data Sanitization
 ### Target Alignment
 
 ![alt text](https://i.imgur.com/d6We5NN.png)
