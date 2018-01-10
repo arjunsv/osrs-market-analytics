@@ -37,14 +37,14 @@ This diagram demonstrates the process of gathering training data and create the 
 
 *Based on this method of gathering training data, the resulting model is created based on a predicted price that would occurs **λ/2** seconds after an observation was taken.*
 
-## Data Sanitization
-# Target Alignment
+# Data Sanitization
+## Target Alignment
 
 ![alt text](https://i.imgur.com/d6We5NN.png)
 
 The diagram above demonstrates the process of aligning the values in output vectors to an observation vector based on the distance between the expected time of observation time + λ/2. observation_time_list represents a mapping between each vector in the observation_vector matrix X and a the time which it was collected at. The target_time_list represents the times that each y value in the target_vector was gathered. For each timestamp, stored as seconds elapsed since January 1st, 1970, 12:00 AM, the target alignment functions perform a binary search, utlizing the fact that target_time_list is already sorted for a relatively efficient **ϴ(NlogN)** runtime. Upon finding the correct timestamp for a given x_vector, a new target_vector_list y is generated based on the index of that timestamp in order to generate a list which aligns the proper y value to the associated observation vector based on the best time within a specified margin of error. 
 
-# Error Correcting
+## Error Correcting
 
 ![alt text](https://i.imgur.com/PfoFKUt.png)
 
