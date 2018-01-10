@@ -67,7 +67,7 @@ class Model:
 		if json:
 			selling = json['selling']
 			if not is_anchor:
-				print(str(selling) + " retrieved at time: " + str(self.y_time_list[-1]))
+				print(str(self.get_ratio_anchor_val(selling)) + " retrieved at time: " + str(self.y_time_list[-1]))
 			return selling
 		return -1
 
@@ -196,11 +196,12 @@ class Model:
 		return y_pred_ratios_to_anchor
 
 	def predict_current(self):
+		print_blue_bold("Predicting on current values...")
 		obs_vector = self.get_current_observation(self.item_id)
 		if obs_vector == -1:
 			print_red_bold("Unable to predict due to invalid JSON request.")
 		else:
-			return self.make_predictions(obs_vector)
+			return self.make_predictions([obs_vector])
 
 	def print_attrs(self):
 		print("observation_vector_count: " + str(len(self.X)))
@@ -218,7 +219,7 @@ class Model:
 lin_reg_model = Model(6685, 25, 2)
 # lin_reg_model.print_attrs()
 print("========================================================")
-lin_reg_model.make_predictions([[10000, 6000, 1.0, 60000],[20000,5000,1.000001,50000]])
+lin_reg_model.predict_current()
 # lin_reg_model.show_plots()
 
 
