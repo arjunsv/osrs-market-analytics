@@ -216,7 +216,7 @@ class Model:
 		plot = sns.pairplot(self.dataframe_total, x_vars=['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population'], y_vars="target_selling_to_anchor_ratio", size=7, aspect=0.7, kind='reg')
 		plt.show()
 
-lin_reg_model = Model(6685, 25, 2)
+lin_reg_model = Model(6685, 28800, 300)
 # lin_reg_model.print_attrs()
 print("========================================================")
 lin_reg_model.predict_current()
