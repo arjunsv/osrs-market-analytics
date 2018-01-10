@@ -21,14 +21,11 @@ This page allows users to select any item in OSRS and add it to the page. The ch
 
 # II. Machine Learning and Statistical Analysis to Predict Price Increases/Decreases
 
-Train and Predict
-------
-
 The goal of this part of the project is to use scikit-learn to predict a target value from a set of real time parameters for a specific item based on the predicted price increase in some user-defined time interval.
 
 ![alt text](https://i.imgur.com/MKz7XpI.png)
 
-### Training Data Collection
+## Training Data Collection
 
 This diagram demonstrates the process of gathering training data and create the observation matrix **X**, and the corresponding output vector **y**. **λ** is a user-defined interval passed in as a parameter when creating the Model object which specifies the duration of training data collection. The diagram below portrays and describes how λ distinguishes how target values are associated with parameter values.
 
