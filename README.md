@@ -4,7 +4,7 @@ OSRS Market Analytics and Price Prediction
 A tool for visualizing real time prices and quantities of tradeable items in the game Old School Runescape. In this popular online video game, there is a central exchange for items that players use to trade eachother. This p This active and dynamic data set is an interesting analog for real life markets and prices. 
 
 
-# Video Demo (Part I and II - click to watch!)
+# Video Demo Part I and II (click to watch)
 [![Alt text](http://i3.ytimg.com/vi/M8LtCLca1m8/maxresdefault.jpg)](https://www.youtube.com/watch?v=M8LtCLca1m8)
 
 # I. Real Time Data Visualization
