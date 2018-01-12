@@ -1,3 +1,4 @@
+import sys
 import requests
 import urllib
 import re
@@ -14,17 +15,25 @@ import matplotlib.pyplot as plt
 from util_functions import *
 
 class Model:
-	def __init__(self, item_id, interval, poll_period, model=LinearRegression):
+	def __init__(self, item_id, interval, poll_period, csv_only, model=LinearRegression):
+		print("==============================================================================================="*2)
 		print_bold("Initializing model for item " + "id=" + str(item_id) + " ~" + id_to_item_name(item_id) + "~" + " over interval " +
 			  str(interval) + " (seconds)" + " with poll period of " + str(poll_period) + " (seconds)" " using " + str(model) + " model" + "...")
+		print("==============================================================================================="*2)
 		self.item_id = item_id
 		self.interval = interval
 		self.poll_period = poll_period
+		self.csv_only = csv_only
 		self.observation_time_list = []
 		self.y_time_list = []
 		self.new_y_time_list = []
-		self.X, self.y = self.get_training_data()
-		self.training_data_to_csv()
+		self.anchor_price = self.get_current_selling_price(self.item_id, True)
+		if self.anchor_price == -1:
+			print_red_bold_nl("Unable to initialize model due to API request failure.")
+			sys.exit()
+		if not csv_only:
+			self.X, self.y = self.get_new_training_data()
+			self.training_data_to_csv()
 		self.X, self.y = self.get_cumul_training_data()
 		self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2)
 		model = model()
@@ -33,11 +42,10 @@ class Model:
 		self.y_pred = self.model.predict(self.X_test)
 		print_blue_bold("Finished initialization!")
 
-	def get_training_data(self):
+	def get_new_training_data(self):
 		X = []
 		y = []
 		t_middle = time.time() + self.interval / 2
-		self.anchor_y = self.get_current_selling_price(self.item_id, True)
 		print_blue_bold("Gathering observation vectors...")
 		print("[current_selling_quantity, current_buying_quantity, current_selling_price, current_population]")
 		while time.time() < t_middle:
@@ -82,7 +90,8 @@ class Model:
 			current_overall_price = json['overall']
 			current_population = self.get_current_population()
 			observation_vector = [current_selling_quantity, current_buying_quantity, current_selling_to_anchor_ratio, current_population]
-			print(str(observation_vector) + " retrieved at time: " + str(self.observation_time_list[-1]))
+			if not self.csv_only:
+				print(str(observation_vector) + " retrieved at time: " + str(self.observation_time_list[-1]))
 			return observation_vector
 		else:
 			return -1
@@ -131,7 +140,7 @@ class Model:
 		print(str(error_count) + " errors removed.")
 
 	def get_ratio_anchor_val(self, price):
-		return price/self.anchor_y
+		return price/self.anchor_price
 
 	def training_data_to_csv(self):
 		print_blue_bold("Exporting to csv...")
@@ -140,7 +149,7 @@ class Model:
 		df.columns = ['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population']
 		df['target_selling_to_anchor_ratio'] = self.y
 		df.insert(loc=0, column='item_id', value=[self.item_id]*len(self.y))
-		df.insert(loc=len(df.columns), column='anchor_selling_price', value=[self.anchor_y]*len(self.y))
+		df.insert(loc=len(df.columns), column='anchor_selling_price', value=[self.anchor_price]*len(self.y))
 		df.insert(loc=len(df.columns), column='obs_time', value=self.observation_time_list)
 		df.insert(loc=len(df.columns), column='target_time', value=self.new_y_time_list)
 		if os.path.exists(file_name):
@@ -151,6 +160,7 @@ class Model:
 			df.to_csv(file_name, index=True)
 
 	def get_cumul_training_data(self):
+		print_blue_bold("Reading from csv...")
 		file_name = str(self.item_id) + "_" + str(self.interval) + "_training_data.csv"	
 		self.dataframe_total = pd.read_csv(file_name)
 		dataframe_observations = self.dataframe_total[['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population']]
@@ -169,9 +179,11 @@ class Model:
 
 	def make_predictions(self, observation_vectors):
 		print_blue_bold("Making predictions...")
+		if self.anchor_price == -1:
+			print_red_bold_nl("Unable to make valid prediction due to model initialization failure")
 		y_pred_ratios_to_anchor = self.model.predict(observation_vectors)
-		y_pred_prices = [self.anchor_y * ratio for ratio in y_pred_ratios_to_anchor]
-		observation_vector_prices = [self.anchor_y * obs_vec[2] for obs_vec in observation_vectors]
+		y_pred_prices = [self.anchor_price * ratio for ratio in y_pred_ratios_to_anchor]
+		observation_vector_prices = [self.anchor_price * obs_vec[2] for obs_vec in observation_vectors]
 		print("CURRENT SAMPLE SIZE: " + str(len(self.X)))
 		for i in range(len(observation_vectors)):
 			print_bold("OBSERVATION VECTOR " + str(i))
@@ -197,9 +209,10 @@ class Model:
 
 	def predict_current(self):
 		print_blue_bold("Predicting on current values...")
+		print("CURRENT TIME: " + str(time.time()))
 		obs_vector = self.get_current_observation(self.item_id)
 		if obs_vector == -1:
-			print_red_bold("Unable to predict due to invalid JSON request.")
+			print_red_bold_nl("Unable to predict due to invalid JSON request.")
 		else:
 			return self.make_predictions([obs_vector])
 
@@ -216,9 +229,8 @@ class Model:
 		plot = sns.pairplot(self.dataframe_total, x_vars=['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population'], y_vars="target_selling_to_anchor_ratio", size=7, aspect=0.7, kind='reg')
 		plt.show()
 
-lin_reg_model = Model(6685, 28800, 300)
+lin_reg_model = Model(6685, 28800, 300, True)
 # lin_reg_model.print_attrs()
-print("========================================================")
 lin_reg_model.predict_current()
 # lin_reg_model.show_plots()
 
