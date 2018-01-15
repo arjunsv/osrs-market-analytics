@@ -140,6 +140,8 @@ class Model:
 		print(str(error_count) + " errors removed.")
 
 	def get_ratio_anchor_val(self, price):
+		if price == -1:
+			return -1
 		return price/self.anchor_price
 
 	def training_data_to_csv(self):
@@ -229,7 +231,7 @@ class Model:
 		plot = sns.pairplot(self.dataframe_total, x_vars=['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population'], y_vars="target_selling_to_anchor_ratio", size=7, aspect=0.7, kind='reg')
 		plt.show()
 
-lin_reg_model = Model(6685, 28800, 300, True)
+lin_reg_model = Model(6685, 28800, 300, False)
 # lin_reg_model.print_attrs()
 lin_reg_model.predict_current()
 # lin_reg_model.show_plots()

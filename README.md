@@ -5,7 +5,7 @@ A tool for visualizing real time prices and quantities of tradeable items in the
 
 
 # Video Demo Part I and II (click to watch)
-[![Alt text](https://i.imgur.com/TewfN3X.png)](https://www.youtube.com/watch?v=M8LtCLca1m8)
+[![Alt text](http://i3.ytimg.com/vi/M8LtCLca1m8/maxresdefault.jpg)](https://www.youtube.com/watch?v=M8LtCLca1m8)
 
 # I. Real Time Data Visualization
 
