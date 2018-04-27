@@ -146,7 +146,7 @@ class Model:
 
 	def training_data_to_csv(self):
 		print_blue_bold("Exporting to csv...")
-		file_name = str(self.item_id) + "_" + str(self.interval) + "_training_data.csv"
+		file_path = "data/" + str(self.item_id) + "_" + str(self.interval) + "_training_data.csv"
 		df = pd.DataFrame(self.X)
 		df.columns = ['current_selling_quantity', 'current_buying_quantity', 'current_selling_to_anchor_ratio', 'current_population']
 		df['target_selling_to_anchor_ratio'] = self.y
@@ -154,12 +154,12 @@ class Model:
 		df.insert(loc=len(df.columns), column='anchor_selling_price', value=[self.anchor_price]*len(self.y))
 		df.insert(loc=len(df.columns), column='obs_time', value=self.observation_time_list)
 		df.insert(loc=len(df.columns), column='target_time', value=self.new_y_time_list)
-		if os.path.exists(file_name):
-			temp_df = pd.read_csv(file_name, index_col=0)
+		if os.path.exists(file_path):
+			temp_df = pd.read_csv(file_path, index_col=0)
 			temp_df = temp_df.append(df, ignore_index=True)
-			temp_df.to_csv(file_name, index=True)
+			temp_df.to_csv(file_path, index=True)
 		else:
-			df.to_csv(file_name, index=True)
+			df.to_csv(file_path, index=True)
 
 	def get_cumul_training_data(self):
 		print_blue_bold("Reading from csv...")
